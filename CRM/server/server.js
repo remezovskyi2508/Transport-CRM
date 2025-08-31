@@ -1,15 +1,15 @@
+import { getEnvVar } from "./utils/getEnvVar.js";
 import express from "express";
-import sqlite3 from "sqlite3";
 import cors from "cors";
 import pino from "pino-http";
-import pkg from "pg";
+import usersRouter from "./routers/users.js";
+import documentsRouter from "./routers/documents.js";
 
-const { Client } = pkg;
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-const PORT = 3000;
+const PORT = Number(getEnvVar("PORT", "3000"));
 
 export const startServer = () => {
   app.use(
@@ -20,9 +20,9 @@ export const startServer = () => {
     })
   );
 
-  app.get("/", (req, res) => {
-    res.send("Get request");
-  });
+  app.use("/users", usersRouter);
+
+  app.use("/documents", documentsRouter);
 
   app.use((err, req, res, next) => {
     res.status(500).json({
