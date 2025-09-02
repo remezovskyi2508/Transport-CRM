@@ -1,4 +1,3 @@
-import { client } from "../db/db.js";
 import * as documentsServices from "../services/documents.js";
 import createError from "http-errors";
 

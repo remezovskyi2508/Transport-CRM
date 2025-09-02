@@ -4,6 +4,7 @@ import cors from "cors";
 import pino from "pino-http";
 import usersRouter from "./routers/users.js";
 import documentsRouter from "./routers/documents.js";
+import docs_typesRouter from "./routers/documents_types.js";
 
 const app = express();
 app.use(express.json());
@@ -23,6 +24,8 @@ export const startServer = () => {
   app.use("/users", usersRouter);
 
   app.use("/documents", documentsRouter);
+
+  app.use("/docs_types", docs_typesRouter);
 
   app.use((err, req, res, next) => {
     res.status(500).json({
